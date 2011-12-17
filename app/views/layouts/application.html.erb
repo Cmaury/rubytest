@@ -1,0 +1,52 @@
+	<!DOCTYPE html>
+<html>
+<head>
+  <title>Passionpack</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->    
+    <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
+    <%= stylesheet_link_tag 'blueprint/print',  :media => 'print' %>
+    <!--[if lt IE 8]><%= stylesheet_link_tag 'blueprint/ie' %><![endif]-->
+    <%= stylesheet_link_tag 'custom', :media => 'screen' %>
+</head>
+<body>
+	<div class='container'>
+		<header>
+			<div id='logo'>
+				<h1>Passion Pack</h1>
+			</div>
+			<nav>
+				<ul>
+				<% if signed_in? %>	
+				<li><%= link_to 'My Account', @current_user %></li>
+				<li><%= link_to 'Sign Out', '/signout', :method => :delete %></li>
+				<% else %>
+				<li><%= link_to 'Sign In' , '/signin' %></li>
+				<% end %>
+				</ul>
+			</nav>	
+		</header>	
+	<section>
+		<% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
+		<%= yield %>
+	</section>	
+		<div id='footer'>
+			<nav class="round">
+		          <ul>
+		            <li><%= link_to "Home", '/' %></li>
+		            <li><%= link_to "About", '/about' %></li>
+					<li><%= link_to "Contact", '/contact' %></li>
+		            <li><%= link_to "Privacy", '/privacy' %></li>
+		          </ul>
+		        </nav>
+		</div>
+	</div>
+	<%= debug(params) if Rails.env.development? %>
+</body>
+</html>
